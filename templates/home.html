@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: sans-serif;
+      }
+      h1 {
+        text-align: center;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: blueviolet;
+      }
+      table {
+        border: 1px solid #000000;
+      }
+      table thead {
+        background-color: blueviolet;
+        color: aquamarine;
+      }
+
+      table tbody {
+        background-color: antiquewhite;
+      }
+      table tbody tr td {
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Employee Details</h1>
+    <div class="container">
+      <table>
+        <thead>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Designation</th>
+          <th>Salary</th>
+          <th>D.O.J</th>
+          <th>Status</th>
+          <th>Department</th>
+          <th>Manager</th>
+        </thead>
+        <tbody>
+          {% for e in employees %}
+          <tr>
+            <td>{{ e.id}}</td>
+            <td>{{ e.full_name}}</td>
+            <td>{{ e.email}}</td>
+            <td>{{ e.designation}}</td>
+            <td>{{ e.salary}}</td>
+            <td>{{ e.joining_date | date:"d/m/Y"}}</td>
+            <td>{{ e.active | yesno:"Active,Inactive"}}</td>
+            <td>{{ e.department}}</td>
+            <td>{{ e.manager}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
