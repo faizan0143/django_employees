@@ -1,0 +1,21 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>View Employee - {{ employee.full_name }}</h1>
+    {% if employee.images %}
+    <img src="{{ employee.images.url }}" alt="Profile Picture" width="200" />
+    {% else %}
+    <img
+      src="{% static '../media/default.png' %}"
+      alt="Profile Picture"
+      width="200"
+    />
+    {% endif %}
+  </body>
+</html>

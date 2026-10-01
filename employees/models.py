@@ -12,6 +12,7 @@ class Department(models.Model):
 class Employee(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    images = models.ImageField(upload_to='employee_images/', default='media/default.png')
     email = models.EmailField(unique=True)
     designation = models.CharField(max_length=50)
     salary = models.IntegerField()

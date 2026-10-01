@@ -1,39 +1,41 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-      .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: sans-serif;
-      }
-      h1 {
-        text-align: center;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        color: blueviolet;
-      }
-      table {
-        border: 1px solid #000000;
-      }
-      table thead {
-        background-color: blueviolet;
-        color: aquamarine;
-      }
-
-      table tbody {
-        background-color: antiquewhite;
-      }
-      table tbody tr td {
-        padding: 10px;
-      }
-    </style>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css"
+    />
   </head>
   <body>
+    {% include 'message.html' %}
     <h1>Employee Details</h1>
+    <a
+      style="
+        display: block;
+        text-align: right;
+        padding-right: 11rem;
+        font-size: 20px;
+        font-weight: bold;
+        text-decoration: none;
+        margin-bottom: 10px;
+      "
+      href="{% url 'create_employee' %}"
+      ><span
+        style="
+          border: 1px solid black;
+          padding: 5px 10px;
+          border-radius: 5px;
+          background-color: #13a106;
+          color: white;
+        "
+        >Add Employee</span
+      ></a
+    >
     <div class="container">
       <table>
         <thead>
@@ -46,6 +48,7 @@
           <th>Status</th>
           <th>Department</th>
           <th>Manager</th>
+          <th>Actions</th>
         </thead>
         <tbody>
           {% for e in employees %}
@@ -59,6 +62,21 @@
             <td>{{ e.active | yesno:"Active,Inactive"}}</td>
             <td>{{ e.department}}</td>
             <td>{{ e.manager}}</td>
+            <td>
+              <table class="inner-table">
+                <tr>
+                  <td>
+                    <a href="{% url 'view_employee' id=e.id %}"
+                      ><i class="fa fa-eye"></i
+                    ></a>
+                  </td>
+                  <td> <a href="{% url 'edit_employee' id=e.id %}"
+                      ><i class="fa fa-edit"></i
+                    ></a></i></td>
+                  <td><i class="fa fa-trash"></i></td>
+                </tr>
+              </table>
+            </td>
           </tr>
           {% endfor %}
         </tbody>

@@ -1,0 +1,30 @@
+{% load crispy_forms_tags %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    {% include 'message.html' %}
+    <form action="{% url 'create_employee' %}" method="post" enctype="multipart/form-data">
+      
+       <div class="container">
+        <h1>Create Employee</h1>
+          {% csrf_token%} 
+          {% comment %} <label for="">First Name</label>
+          {{ form.first_name}}
+
+          <label for="">Last Name</label>
+          {{ form.last_name}} {% endcomment %}
+
+        {{ form | crispy}}
+        <button type="submit">Submit</button>
+       </div>
+
+      
+    </form>
+  </body>
+</html>
