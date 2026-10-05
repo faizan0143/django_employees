@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Employee
 from .forms import EmployeeForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
 
 # Create your views here.
 
@@ -15,7 +16,8 @@ def view_employee(request, id):
     }
     return render(request, 'view_employee.html', context)
 
-
+@login_required 
+@permission_required('employees.add_employee', raise_exception=True)
 def create_employee(request):
     if request.method == "POST":
         form = EmployeeForm(request.POST, request.FILES)
@@ -35,8 +37,17 @@ def create_employee(request):
     return render(request, 'create_employee.html', context)
 
 
+@login_required
 def edit_employee(request, id):
     employee = get_object_or_404(Employee, id=id)
+    
+    if request.method == "POST":
+        form = EmployeeForm(request.POST, request.FILES, instance=employee)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Employee Updated successfully!')
+            return redirect('home')
+                
     form = EmployeeForm(instance=employee)
     
     context = {
@@ -44,3 +55,12 @@ def edit_employee(request, id):
     }
     
     return render(request, 'edit_employee.html', context)
+
+
+@login_required
+def delete_employee(request, id):
+    employee = Employee.objects.get(id=id)
+    
+    employee.delete()
+    messages.success(request, 'Employee Deleted successfully!')
+    return redirect('home')
